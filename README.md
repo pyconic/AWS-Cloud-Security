@@ -59,3 +59,29 @@ For example:
 
 Now, my new AWS console sign-in URL is:
 https://nextwork-alias-molly.signin.aws.amazon.com/console
+
+This makes logging in much more convenient compared to using the default account ID.
+
+## 4. Logging in as an IAM User
+To log in as an IAM user, AWS provides two methods: emailing the sign-in instructions or downloading a .csv file containing the login details. When I logged in as my IAM user, I noticed that many panels showed "Access denied" messages, which contrasted with the unrestricted access I usually have with my main AWS account. This emphasized the importance of correctly configuring permissions to ensure limited, secure access.
+
+![Tagging EC2 Instances](./images/user.png)
+
+## 5. Testing IAM Policies
+To validate the IAM policies, I tested both development and production instances by attempting the Stop Instances action.
+
+### Stopping the Production Instance
+When I attempted to stop the production instance, I received an error message stating that I was not authorized to perform this action. This confirmed that the policy was correctly denying actions on production-tagged resources.
+
+![Tagging EC2 Instances](./images/denied.png)
+
+### Stopping the Development Instance
+When I tried to stop the development instance, the action succeeded. This is because the policy attached to the user group, which my user is assigned to, allowed all EC2 actions on instances with the "Env" tag set to "development".
+
+![Tagging EC2 Instances](./images/stopping.png)
+
+# Troubleshooting and Lessons Learned
+One unexpected challenge was encountering "Access denied" messages while logged in as an IAM user. This highlighted the differences in permissions between a regular user and an administrator account, emphasizing the importance of correctly configuring permissions for different roles.
+
+# Summary
+This project demonstrates the importance of precise access control in cloud environments using AWS IAM. By using tags and well-crafted policies, I was able to create a secure environment that grants access only where necessary. It was a valuable experience that reinforced best practices in cloud security.
